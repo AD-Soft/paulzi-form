@@ -707,11 +707,11 @@ var ajaxSubmit = function (e) {
             };
 
             trigger(submitBefore);
-
             var options = {
                 url:         $btn.attr('formaction')  || $form.attr('action'),
                 method:      $btn.attr('formmethod')  || $form.attr('method') || 'GET',
                 contentType: $btn.attr('formenctype') || $form.attr('enctype'),
+				dataType:	 $form.attr('data-ajax-type') || 'html',
                 xhr:         function () {
                     var xhr = $.ajaxSettings.xhr(),
                         listener = function (type) {
@@ -762,6 +762,7 @@ var ajaxSubmit = function (e) {
                         formData.append(item.name, item.value);
                     });
                     options.data        = formData;
+					
                     options.processData = false;
                     options.contentType = false;
                 } else {
@@ -772,7 +773,7 @@ var ajaxSubmit = function (e) {
                 }
             } else {
                 options.data = $.merge($form.serializeArray(), data);
-            }
+            }				
 
             // make ajax
             $.ajax(options)
